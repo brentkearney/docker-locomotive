@@ -1,0 +1,25 @@
+engine:
+  build: .
+  expose:
+    - '80'
+    - '443'
+    - '3000'
+  ports:
+    - '80:80'
+    - '443:443'
+    - '3000:3000'
+  volumes:
+    - ./rubygems:/var/lib/gems
+    - ./config:/home/app/engine/config
+    - ./entrypoint.sh:/sbin/entrypoint.sh
+  links:
+    - db
+db:
+  image: mongo:3.2.5
+  volumes:
+    - ./mongo/db:/data/db
+    - ./mongo/configdb:/data/configdb
+  expose:
+    - '27017'
+  ports:
+    - '27017:27017'
